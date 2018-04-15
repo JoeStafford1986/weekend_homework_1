@@ -77,12 +77,16 @@ def customer_can_afford_pet(customer, pet_to_purchase)
   end
 end
 
+def increment_pet_sold_counter(pet_shop)
+  pet_shop[:admin][:pets_sold] += 1
+end
+
 def sell_pet_to_customer(pet_shop, pet, customer)
   if customer_can_afford_pet(customer, pet)
     remove_customer_cash(customer, pet[:price])
     add_or_remove_cash(pet_shop, pet[:price])
-    add_pet_to_customer(customer, pet)
     remove_pet_by_name(pet_shop, pet[:name])
-    pet_shop[:admin][:pets_sold] += 1
+    add_pet_to_customer(customer, pet)
+    increment_pet_sold_counter(pet_shop)
   end
 end
