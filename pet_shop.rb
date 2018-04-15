@@ -70,7 +70,7 @@ def add_pet_to_customer(customer, new_pet)
 end
 
 def customer_can_afford_pet(customer, pet_to_purchase)
-  if customer[:cash] >= pet_to_purchase[:price]
+  if pet_to_purchase != nil && customer[:cash] >= pet_to_purchase[:price]
     return true
   else
     return false
