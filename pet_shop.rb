@@ -49,8 +49,8 @@ def remove_pet_by_name(pet_shop, pet_name)
   end
 end
 
-def add_pet_to_stock(pet_shop, pet_hash)
-  pet_shop[:pets].push(pet_hash)
+def add_pet_to_stock(pet_shop, pet)
+  pet_shop[:pets].push(pet)
 end
 
 def customer_cash(customer)
@@ -74,5 +74,15 @@ def customer_can_afford_pet(customer, pet_to_purchase)
     return true
   else
     return false
+  end
+end
+
+def sell_pet_to_customer(pet_shop, pet, customer)
+  if customer_can_afford_pet(customer, pet)
+    remove_customer_cash(customer, pet[:price])
+    add_or_remove_cash(pet_shop, pet[:price])
+    add_pet_to_customer(customer, pet)
+    remove_pet_by_name(pet_shop, pet[:name])
+    pet_shop[:admin][:pets_sold] += 1
   end
 end
