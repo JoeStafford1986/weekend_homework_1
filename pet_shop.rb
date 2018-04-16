@@ -33,12 +33,11 @@ def pets_by_breed(pet_shop, pet_breed)
 end
 
 def find_pet_by_name(pet_shop, pet_name)
+  match = nil
   for pet in pet_shop[:pets]
-    if pet[:name] == pet_name
-      return pet
-    end
+    match = pet if pet[:name] == pet_name
   end
-  return nil
+  return match
 end
 
 def remove_pet_by_name(pet_shop, pet_name)
@@ -70,11 +69,11 @@ def add_pet_to_customer(customer, new_pet)
 end
 
 def customer_can_afford_pet(customer, pet_to_purchase)
-  if pet_to_purchase != nil && customer[:cash] >= pet_to_purchase[:price]
-    return true
-  else
-    return false
-  end
+  return customer[:cash] >= pet_to_purchase[:price]
+  #   return true
+  # else
+  #   return false
+  # end
 end
 
 def increment_pet_sold_counter(pet_shop)
@@ -82,11 +81,13 @@ def increment_pet_sold_counter(pet_shop)
 end
 
 def sell_pet_to_customer(pet_shop, pet, customer)
-  if customer_can_afford_pet(customer, pet)
-    remove_customer_cash(customer, pet[:price])
-    add_or_remove_cash(pet_shop, pet[:price])
-    remove_pet_by_name(pet_shop, pet[:name])
-    add_pet_to_customer(customer, pet)
-    increment_pet_sold_counter(pet_shop)
-  end
+  return if pet == nil
+  return if !customer_can_afford_pet(customer, pet)
+  #if pet != nil && customer_can_afford_pet(customer, pet)
+  remove_customer_cash(customer, pet[:price])
+  add_or_remove_cash(pet_shop, pet[:price])
+  remove_pet_by_name(pet_shop, pet[:name])
+  add_pet_to_customer(customer, pet)
+  increment_pet_sold_counter(pet_shop)
+  #end
 end
